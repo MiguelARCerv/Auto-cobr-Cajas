@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_USER: gael
+      POSTGRES_PASSWORD: superpass
+      POSTGRES_DB: cajas_autopago
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gael -d cajas_autopago"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql+psycopg2://gael:superpass@db:5432/cajas_autopago
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+
+volumes:
+  pgdata:
