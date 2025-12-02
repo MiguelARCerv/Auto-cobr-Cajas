@@ -39,8 +39,55 @@ const Pago = () => {
     }
   }, []);
 
-  const handleConfirm = () => {
-    setShowConfirmOverlay(true);
+  const handleConfirm = async () => {
+    // Leer carrito
+    const carritoStr = localStorage.getItem("carrito");
+    const carrito = carritoStr ? JSON.parse(carritoStr) : [];
+
+    if (carrito.length === 0) {
+      alert("Tu carrito está vacío");
+      return;
+    }
+
+    // Construir datos REALES para pedidos (coinciden con la DB)
+    const pedidoPayload = {
+      subtotal: subtotal,
+      descuento_total: 0,
+      impuesto_total: impuestos,
+      total_final: total,
+      estado: "PAGADO",
+    };
+
+    try {
+      const res = await fetch(
+        "https://mass-beside-bench-tear.trycloudflare.com/pedidos",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(pedidoPayload),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error("Error backend:", data);
+        alert("Error al crear pedido");
+        return;
+      }
+
+      // Guardar ID del pedido
+      localStorage.setItem("last_order_id", data.pedido_id);
+
+      // Vaciar carrito
+      localStorage.removeItem("carrito");
+
+      // Mostrar pantalla de confirmación
+      setShowConfirmOverlay(true);
+    } catch (error) {
+      console.error(error);
+      alert("Error de conexión con el backend");
+    }
   };
 
   const baseTileClasses =

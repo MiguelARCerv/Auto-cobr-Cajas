@@ -23,7 +23,10 @@ export default function FooterNav() {
         </button>
 
         {/* Ofertas */}
-        <button className="flex flex-col items-center gap-1 p-2 rounded-lg text-gray-500">
+        <Link
+          to="/ofertas"
+          className="flex flex-col items-center gap-1 p-2 rounded-lg text-gray-500"
+        >
           <span className="material-symbols-outlined">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -34,22 +37,22 @@ export default function FooterNav() {
               <path
                 fill="none"
                 stroke="#000000"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="m7.369 28.832l30.755-5.516l5.376-9.143l-8.245-5.958L4.5 13.73l2.869 15.102z"
               />
               <path
                 fill="none"
                 stroke="#000000"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="m10.494 28.272l7.997 11.513l23.522-15.73l1.487-9.882"
               />
               <circle cx="39.339" cy="14.912" r=".75" fill="#000000" />
             </svg>
           </span>
           <span className="text-xs font-medium">Ofertas</span>
-        </button>
+        </Link>
         {/* ESCANEAR (Botón circular) */}
         <Link
           to="/escaneo"
@@ -70,7 +73,10 @@ export default function FooterNav() {
         </Link>
 
         {/* Pedidos */}
-        <button className="flex flex-col items-center gap-1 p-2 rounded-lg text-gray-500">
+        <Link
+          to="/pedidos"
+          className="flex flex-col items-center gap-1 p-2 rounded-lg text-gray-500"
+        >
           <span className="material-symbols-outlined">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +108,7 @@ export default function FooterNav() {
             </svg>
           </span>
           <span className="text-xs font-medium">Pedidos</span>
-        </button>
+        </Link>
 
         {/* Carrito */}
         <Link

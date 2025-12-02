@@ -1,6 +1,39 @@
 import { useState, useEffect } from "react";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 
+const PRODUCTOS_MOCK: Record<string, any> = {
+  "7501055336782": {
+    producto_id: 1,
+    nombre: "Coca Cola 600ml",
+    cantidad: "600ml",
+    codigo: "7501055336782",
+    precio: 18.5,
+    fecha_caducidad: "2025-12-31",
+    stock: 100,
+    activo: true,
+  },
+  EH00101: {
+    producto_id: 2,
+    nombre: "Plancha eléctrica",
+    cantidad: "1 pza",
+    codigo: "EH00101",
+    precio: 399,
+    fecha_caducidad: null,
+    stock: 25,
+    activo: true,
+  },
+  EH00102: {
+    producto_id: 3,
+    nombre: "Tostador",
+    cantidad: "1 pza",
+    codigo: "EH00102",
+    precio: 549,
+    fecha_caducidad: null,
+    stock: 18,
+    activo: true,
+  },
+};
+
 export default function Escaneo() {
   const [data, setData] = useState<string | null>(null);
   const [loadingProduct, setLoadingProduct] = useState(false);
@@ -28,33 +61,23 @@ export default function Escaneo() {
 
     setLoadingProduct(true);
 
-    const fetchProducto = async () => {
-      try {
-        const res = await fetch(
-          `https://having-reasonable-injured-protecting.trycloudflare.com/productos/codigo/${data}`
-        );
-        const result = await res.json();
+    const verificarProducto = () => {
+      const producto = PRODUCTOS_MOCK[data!];
 
-        if (res.ok && result) {
-          agregarAlCarrito(result);
-        } else {
-          setToast("❌ Producto no encontrado");
-          setTimeout(() => setToast(null), 2000);
-        }
-      } catch (error) {
-        console.log(error);
-        setToast("⚠️ Error al consultar producto");
+      if (producto) {
+        agregarAlCarrito(producto);
+      } else {
+        setToast("❌ Producto no encontrado");
         setTimeout(() => setToast(null), 2000);
-      } finally {
-        // Espera antes de permitir otro escaneo
-        setTimeout(() => {
-          setLoadingProduct(false);
-          setData(null);
-        }, 1500);
       }
+
+      setTimeout(() => {
+        setLoadingProduct(false);
+        setData(null);
+      }, 1500);
     };
 
-    fetchProducto();
+    verificarProducto();
   }, [data, loadingProduct]);
 
   return (
@@ -71,7 +94,7 @@ export default function Escaneo() {
             onUpdate={(_, result) => {
               if (result) {
                 const code = result.getText();
-                console.log("ESCANEADO:", code); // 🔥 Monitor para saber si detecta
+                console.log("ESCANEADO:", code);
                 if (code) setData(code);
               }
             }}

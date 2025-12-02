@@ -5,6 +5,8 @@ import Pago from "./components/Pago";
 import ConfirmPurchase from "./components/ConfirmPurchase";
 import ProductosCat from "./components/ProductosCat";
 import Escaneo from "./components/Escaneo";
+import Pedido from "./components/Pedido";
+import Ofertas from "./components/Ofertas";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <Route path="/pago" element={<Pago />} />
       <Route path="/confirmacion" element={<ConfirmPurchase />} />
       <Route path="/escaneo" element={<Escaneo />} />
+      <Route path="/pedidos" element={<Pedido />} />
+      <Route path="ofertas" element={<Ofertas />} />
     </Routes>
   );
 }

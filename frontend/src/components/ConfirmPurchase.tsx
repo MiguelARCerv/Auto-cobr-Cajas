@@ -7,8 +7,7 @@ const ConfirmPurchase = () => {
   const [stage, setStage] = useState<Stage>("filling");
   const navigate = useNavigate();
 
-  // Id de pedido de ejemplo (luego vendrá del backend / contexto)
-  const orderId = "1234567890";
+  const orderId = localStorage.getItem("last_order_id") || "0000";
 
   useEffect(() => {
     const timer = setTimeout(() => {

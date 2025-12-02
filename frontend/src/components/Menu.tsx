@@ -27,9 +27,7 @@ export const Menu: React.FC = () => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch(
-      "https://having-reasonable-injured-protecting.trycloudflare.com/categorias/"
-    )
+    fetch("https://mass-beside-bench-tear.trycloudflare.com/categorias/")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error(err));

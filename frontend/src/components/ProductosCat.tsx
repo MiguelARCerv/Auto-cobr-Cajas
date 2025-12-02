@@ -36,7 +36,7 @@ export default function ProductosCat() {
     const fetchProductos = async () => {
       try {
         const res = await fetch(
-          `https://having-reasonable-injured-protecting.trycloudflare.com/productos/categoria/${id}`
+          `https://mass-beside-bench-tear.trycloudflare.com/productos/categoria/${id}`
         );
         const data = await res.json();
         setProductos(data);
